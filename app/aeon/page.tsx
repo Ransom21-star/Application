@@ -10,27 +10,39 @@ export default function AeonPage() {
   ])
   const [draft, setDraft] = useState('')
   const [loading, setLoading] = useState(false)
+  const [voiceEnabled, setVoiceEnabled] = useState(false)
+
+  const systemPrompt = 'You are AEON, a wise life guide that gives clear, compassionate, and actionable guidance based on the user\'s current mission, energy, and purpose.'
 
   async function sendMessage() {
     if (!draft.trim()) return
+
     const nextMessages: { role: 'user' | 'assistant'; content: string }[] = [...messages, { role: 'user', content: draft }]
     setMessages(nextMessages)
     setDraft('')
     setLoading(true)
-    const response = await callAEON({ messages: nextMessages })
+
+    const response = await callAEON({ system: systemPrompt, messages: nextMessages })
     setLoading(false)
-    setMessages(prev => [...prev, { role: 'assistant' as const, content: response || 'AEON is silent.' }])
+    setMessages(prev => [...prev, { role: 'assistant', content: response || 'AEON is silent.' }])
   }
 
   return (
     <main className="min-h-screen px-4 py-10 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-4xl rounded-[32px] border border-[rgba(255,255,255,0.08)] bg-[rgba(8,7,20,0.95)] p-6 shadow-[0_0_60px_rgba(102,68,255,0.2)]">
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-freqPurple">AEON chat</p>
             <h1 className="mt-3 text-3xl font-semibold text-white">Speak to your sage</h1>
+            <p className="mt-2 text-text">Use AEON to clarify missions, reflect, and build momentum with each response.</p>
           </div>
-          <span className="rounded-3xl border border-[rgba(255,255,255,0.08)] bg-[rgba(14,13,28,0.95)] px-4 py-2 text-sm text-text">Voice output off</span>
+          <button
+            type="button"
+            onClick={() => setVoiceEnabled(prev => !prev)}
+            className={`rounded-3xl border px-4 py-2 text-sm transition ${voiceEnabled ? 'border-accent bg-[rgba(102,68,255,0.14)] text-white' : 'border-[rgba(255,255,255,0.08)] bg-[rgba(14,13,28,0.95)] text-text'}`}
+          >
+            Voice {voiceEnabled ? 'on' : 'off'}
+          </button>
         </div>
 
         <div className="space-y-4">
