@@ -1,0 +1,96 @@
+:root {
+  --bg: #03020a;
+  --bg2: #07060f;
+  --bg3: #0c0b18;
+  --panel: rgba(8,7,20,0.97);
+  --panel2: rgba(14,13,28,0.95);
+  --border: rgba(80,60,200,0.18);
+  --border-hi: rgba(100,80,255,0.45);
+  --accent: #6644ff;
+  --accent2: #33aaff;
+  --gold: #ffd700;
+  --text: #b0aed0;
+  --text-dim: #504e80;
+  --text-bright: #ffffff;
+  --freq-red: #ff1133;
+  --freq-orange: #ff6600;
+  --freq-yellow: #ffcc00;
+  --freq-green: #00ff88;
+  --freq-blue: #0099ff;
+  --freq-purple: #bb00ff;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  min-height: 100%;
+  background: radial-gradient(circle at top, rgba(102,68,255,0.18), transparent 28%), linear-gradient(180deg, #07060f 0%, #03020a 100%);
+  color: var(--text);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background: transparent;
+  font-family: 'Rajdhani', ui-sans-serif, system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(102,68,255,0.35);
+  color: white;
+}
+
+body::before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 32px
+  );
+  opacity: 0.6;
+  z-index: 0;
+}
+
+body, #root, #__next {
+  min-height: 100vh;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.glass-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+}
+
+.glow-button {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 18px rgba(102, 68, 255, 0.36);
+  transform: translateY(-1px);
+}
